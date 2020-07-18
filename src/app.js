@@ -3,6 +3,7 @@ class IndecisionApp extends React.Component {
     constructor(props) {
         super(props)
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
+        this.handleDeleteOption = this.handleDeleteOption.bind(this)
         this.handleAddOption = this.handleAddOption.bind(this)
         this.handlePickOption = this.handlePickOption.bind(this)
 
@@ -14,6 +15,12 @@ class IndecisionApp extends React.Component {
     handleDeleteOptions() {
         this.setState(() => ({
             options: []
+        }))
+    }
+
+    handleDeleteOption(optionToRemove) {
+        this.setState((p) => ({
+            options: p.options.filter((option) => option !== optionToRemove)
         }))
     }
 
@@ -50,6 +57,7 @@ class IndecisionApp extends React.Component {
                 <Options
                     options={this.state.options}
                     handleDeleteOptions={this.handleDeleteOptions}
+                    handleDeleteOption={this.handleDeleteOption}
                     handleRenderOptions={this.handleRenderOptions}
                 />
                 <AddOption
@@ -115,27 +123,6 @@ const Action = (props) => {
     )
 }
 
-// class Options extends React.Component {
-
-//     render() {
-//         return (
-//             <div>
-//                 <button onClick={this.props.handleDeleteOptions}>Remove All</button>
-//                 <ol>
-//                 {
-//                     this.props.options.map((o) => {
-//                         return (
-//                             <Option key={o} option={o} />
-//                         )
-//                     })
-//                 }
-//                 </ol>
-
-//             </div>
-//         )
-//     }
-// }
-
 const Options = (props) => {
     return (
         <div>
@@ -144,7 +131,11 @@ const Options = (props) => {
             {
                 props.options.map((o) => {
                     return (
-                        <Option key={o} option={o} />
+                        <Option
+                            key={o}
+                            option={o}
+                            handleDeleteOption={props.handleDeleteOption}
+                        />
                     )
                 })
             }
@@ -154,21 +145,16 @@ const Options = (props) => {
     )
 }
 
-// class Option extends React.Component {
-
-//     render() {
-//         return (
-//             <div>
-//             {this.props.option}
-//             </div>
-//         )
-//     }
-// }
-
 const Option = (props) => {
     return (
         <div>
-        {props.option}
+            {props.option}
+            <button
+                onClick={(e) => {
+                    props.handleDeleteOption(props.option)
+                }}
+            >remove
+            </button>
         </div>
     )
 }
