@@ -15,30 +15,6 @@ export class IndecisionApp extends React.Component {
         }));
     }
 
-    componentDidMount = () => {
-        try {
-            const json = localStorage.getItem("options");
-            const options = JSON.parse(json);
-            if (options) {
-                this.setState((p) => ({ options: options }));
-            }
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
-
-    componentDidUpdate = (prevProps, prevState) => {
-        console.log("componentDidUpdate");
-        if (prevState.options.length != this.state.options.length) {
-            localStorage.setItem("options", JSON.stringify(this.state.options));
-        }
-    }
-
-    componentWillUnmount = () => {
-        console.log("conmopnentWillUnmount");
-    }
-
     handleDeleteOption = (optionToRemove) => {
         this.setState((p) => ({
             options: p.options.filter((option) => option !== optionToRemove)
@@ -63,6 +39,30 @@ export class IndecisionApp extends React.Component {
     handlePickOption = () => {
         const n = Math.floor(Math.random() * this.state.options.length);
         console.log(this.state.options[n]);
+    }
+
+    componentDidMount = () => {
+        try {
+            const json = localStorage.getItem("options");
+            const options = JSON.parse(json);
+            if (options) {
+                this.setState((p) => ({ options: options }));
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    componentDidUpdate = (prevProps, prevState) => {
+        console.log("componentDidUpdate");
+        if (prevState.options.length != this.state.options.length) {
+            localStorage.setItem("options", JSON.stringify(this.state.options));
+        }
+    }
+
+    componentWillUnmount = () => {
+        console.log("conmopnentWillUnmount");
     }
 
     render() {
