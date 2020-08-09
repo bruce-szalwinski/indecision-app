@@ -11,11 +11,12 @@ export const Options = (props) => (
         </div>
         {props.options.length == 0 && <p className="widget__message">Please add an option to get started</p>}
         <ol>
-            {props.options.map((o) => {
+            {props.options.map((o, index) => {
                 return (
                     <Option
                         key={o}
                         option={o}
+                        count={index + 1}
                         handleDeleteOption={props.handleDeleteOption} />
                 );
             })}
