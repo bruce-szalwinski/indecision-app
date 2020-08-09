@@ -4,26 +4,18 @@ import { Action } from './Action';
 import { Header } from './Header';
 import { Options } from './Options';
 export class IndecisionApp extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
-        this.handleDeleteOption = this.handleDeleteOption.bind(this);
-        this.handleAddOption = this.handleAddOption.bind(this);
-        this.handlePickOption = this.handlePickOption.bind(this);
-        this.componentDidMount = this.componentDidMount.bind(this);
 
-        this.state = {
-            options: []
-        };
+    state = {
+        options: []
     }
 
-    handleDeleteOptions() {
+    handleDeleteOptions = () => {
         this.setState(() => ({
             options: []
         }));
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
         try {
             const json = localStorage.getItem("options");
             const options = JSON.parse(json);
@@ -36,24 +28,24 @@ export class IndecisionApp extends React.Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate = (prevProps, prevState) => {
         console.log("componentDidUpdate");
         if (prevState.options.length != this.state.options.length) {
             localStorage.setItem("options", JSON.stringify(this.state.options));
         }
     }
 
-    componentWillUnmount() {
+    componentWillUnmount = () => {
         console.log("conmopnentWillUnmount");
     }
 
-    handleDeleteOption(optionToRemove) {
+    handleDeleteOption = (optionToRemove) => {
         this.setState((p) => ({
             options: p.options.filter((option) => option !== optionToRemove)
         }));
     }
 
-    handleAddOption(option) {
+    handleAddOption = (option) => {
         if (!option) {
             return 'Enter valid value';
 
@@ -68,7 +60,7 @@ export class IndecisionApp extends React.Component {
         }));
     }
 
-    handlePickOption() {
+    handlePickOption = () => {
         const n = Math.floor(Math.random() * this.state.options.length);
         console.log(this.state.options[n]);
     }
